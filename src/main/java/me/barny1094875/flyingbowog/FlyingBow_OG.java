@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -60,6 +61,27 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
                     .getItemInMainHand()
                     .getItemFlags().contains(ItemFlag.HIDE_DYE)){
                 event.getProjectile().addPassenger(event.getEntity());
+
+                // if the bow has infinity on it, remove infinity
+
+                // infinity is just way too powerful on an item like this
+
+                // I'm leaving the item enchantable since we still want mending and unbreaking
+                // to work for the bow, just like for an elytra
+
+                // even though mending can't be put on a bow with infinity, grindstones exist
+                // and an infinity bow can be made to last forever, it just takes some time
+                // at an exp farm to repair it
+                if((((Player) event.getEntity())
+                        .getInventory()
+                        .getItemInMainHand()
+                        .getEnchantments().containsKey(Enchantment.ARROW_INFINITE))){
+                    // remove infinity from the bow
+                    ((Player) event.getEntity())
+                            .getInventory()
+                            .getItemInMainHand()
+                            .removeEnchantment(Enchantment.ARROW_INFINITE);
+                }
             }
         }
     }

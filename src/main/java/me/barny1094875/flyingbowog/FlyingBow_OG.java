@@ -32,10 +32,9 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
         // create the flying bow item
         ItemStack flyingBowItem = new ItemStack(Material.BOW);
         ItemMeta bowMeta = flyingBowItem.getItemMeta();
-        bowMeta.displayName(Component.text("")
+        bowMeta.displayName(Component.text("Flying Bow")
                 .color(TextColor.color(0, 255, 255))
-                .decorate(TextDecoration.ITALIC)
-                .content("Flying Bow"));
+                .decorate(TextDecoration.ITALIC));
         bowMeta.lore(Collections.singletonList(Component.text("Shoot this bow to FLY")));
         flyingBowItem.setItemMeta(bowMeta);
 
@@ -61,10 +60,10 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {
 
-        ItemStack eventBow = ((Player) event.getEntity())
+        Entity eventEntity = event.getEntity();
+        ItemStack eventBow = ((Player) eventEntity)
                 .getInventory()
                 .getItemInMainHand();
-        Entity eventEntity = event.getEntity();
         Location eventEntityLocation = eventEntity.getLocation();
         Entity eventArrow = event.getProjectile();
 
@@ -89,10 +88,8 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
                     eventArrow.addPassenger(eventEntity);
                 }, 2L);
 
-                if (((Player) event.getEntity())
-                        .getInventory()
-                        .getItemInMainHand()
-                        .getItemFlags().contains(ItemFlag.HIDE_DYE)) {
+                if (eventBow.getItemFlags()
+                        .contains(ItemFlag.HIDE_DYE)) {
                     // make the player ride the bow
                     event.getProjectile().addPassenger(event.getEntity());
 

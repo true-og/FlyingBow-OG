@@ -1,0 +1,5 @@
+name: FlyingBow-OG
+version: '${version}'
+main: me.barny1094875.flyingbowog.FlyingBow_OG
+author: barny1094875
+api-version: 1.18

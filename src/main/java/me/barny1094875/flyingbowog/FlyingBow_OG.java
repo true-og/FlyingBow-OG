@@ -60,6 +60,7 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
                     .getInventory()
                     .getItemInMainHand()
                     .getItemFlags().contains(ItemFlag.HIDE_DYE)){
+                // make the player ride the bow
                 event.getProjectile().addPassenger(event.getEntity());
 
                 // if the bow has infinity on it, remove infinity

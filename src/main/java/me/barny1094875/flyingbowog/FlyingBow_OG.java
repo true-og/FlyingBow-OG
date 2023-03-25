@@ -59,21 +59,21 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onEntityShootBow(EntityShootBowEvent event){
+    public void onEntityShootBow(EntityShootBowEvent event) {
 
-        ItemStack eventBow =((Player) event.getEntity())
-                            .getInventory()
-                            .getItemInMainHand();
+        ItemStack eventBow = ((Player) event.getEntity())
+                .getInventory()
+                .getItemInMainHand();
         Entity eventEntity = event.getEntity();
         Location eventEntityLocation = eventEntity.getLocation();
         Entity eventArrow = event.getProjectile();
 
         // if the entity that shot the bow is a player
-        if(eventEntity instanceof Player){
+        if (eventEntity instanceof Player) {
 
             // if the player is holding a flying bow
-            if(eventBow.getItemFlags()
-                    .contains(ItemFlag.HIDE_DYE)){
+            if (eventBow.getItemFlags()
+                    .contains(ItemFlag.HIDE_DYE)) {
 
                 // eject the player from the previous arrow, if they were riding
                 // on one before
@@ -89,21 +89,28 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
                     eventArrow.addPassenger(eventEntity);
                 }, 2L);
 
+                if (((Player) event.getEntity())
+                        .getInventory()
+                        .getItemInMainHand()
+                        .getItemFlags().contains(ItemFlag.HIDE_DYE)) {
+                    // make the player ride the bow
+                    event.getProjectile().addPassenger(event.getEntity());
 
-                // if the bow has infinity on it, remove infinity
+                    // if the bow has infinity on it, remove infinity
 
-                // infinity is just way too powerful on an item like this
+                    // infinity is just way too powerful on an item like this
 
-                // I'm leaving the item enchantable since we still want mending and unbreaking
-                // to work for the bow, just like for an elytra
+                    // I'm leaving the item enchantable since we still want mending and unbreaking
+                    // to work for the bow, just like for an elytra
 
-                // even though mending can't be put on a bow with infinity, grindstones exist
-                // and an infinity bow can be made to last forever, it just takes some time
-                // at an exp farm to repair it
-                if((eventBow.getEnchantments()
-                        .containsKey(Enchantment.ARROW_INFINITE))){
-                    // remove infinity from the bow
-                    eventBow.removeEnchantment(Enchantment.ARROW_INFINITE);
+                    // even though mending can't be put on a bow with infinity, grindstones exist
+                    // and an infinity bow can be made to last forever, it just takes some time
+                    // at an exp farm to repair it
+                    if ((eventBow.getEnchantments()
+                            .containsKey(Enchantment.ARROW_INFINITE))) {
+                        // remove infinity from the bow
+                        eventBow.removeEnchantment(Enchantment.ARROW_INFINITE);
+                    }
                 }
             }
         }

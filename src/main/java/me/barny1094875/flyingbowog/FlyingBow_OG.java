@@ -69,6 +69,10 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
         Map<Enchantment, Integer> bowEnchantments = eventBow.getEnchantments();
         Location eventEntityLocation = eventEntity.getLocation();
         Entity eventArrow = event.getProjectile();
+        Entity previousArrow = null;
+        if (eventEntity.getVehicle() != null){
+            previousArrow = eventEntity.getVehicle();
+        }
 
         // if the entity that shot the bow is a player
         if (eventEntity instanceof Player) {
@@ -78,8 +82,9 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
 
                 // eject the player from the previous arrow, if they were riding
                 // on one before
-                if (eventEntity.getVehicle() != null) {
-                    eventEntity.getVehicle().removePassenger(eventEntity);
+                if (previousArrow != null) {
+                    previousArrow.removePassenger(eventEntity);
+                    previousArrow.remove();
                 }
 
                 // tp the player to the location they were at when the arrow was shot 2 ticks after it

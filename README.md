@@ -9,6 +9,6 @@ Authors: Barny1094875.
 
 To build:
 
-./gradlew build
+./gradlew build in main project directory
 
 The resulting .jar file will be in build/libs/

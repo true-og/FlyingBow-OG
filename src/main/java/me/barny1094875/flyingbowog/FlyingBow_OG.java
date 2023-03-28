@@ -62,20 +62,19 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {
 
-        Entity eventEntity = event.getEntity();
-        ItemStack eventBow = ((Player) eventEntity)
-                .getInventory()
-                .getItemInMainHand();
-        Map<Enchantment, Integer> bowEnchantments = eventBow.getEnchantments();
-        Location eventEntityLocation = eventEntity.getLocation();
-        Entity eventArrow = event.getProjectile();
-        Entity previousArrow = null;
-        if (eventEntity.getVehicle() != null){
-            previousArrow = eventEntity.getVehicle();
-        }
+        if (event.getEntity() instanceof Player) {
+            Entity eventEntity = event.getEntity();
+            ItemStack eventBow = ((Player) eventEntity)
+                    .getInventory()
+                    .getItemInMainHand();
+            Map<Enchantment, Integer> bowEnchantments = eventBow.getEnchantments();
+            Location eventEntityLocation = eventEntity.getLocation();
+            Entity eventArrow = event.getProjectile();
+            Entity previousArrow = null;
+            if (eventEntity.getVehicle() != null) {
+                previousArrow = eventEntity.getVehicle();
+            }
 
-        // if the entity that shot the bow is a player
-        if (eventEntity instanceof Player) {
 
             // if the player is holding a flying bow
             if (eventBow.getItemFlags().contains(ItemFlag.HIDE_DYE)) {

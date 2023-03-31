@@ -39,6 +39,7 @@ public class onArrowPickup implements Listener {
             playerHeadLocation.setY(playerHeadLocation.getY() + 1);
             Block playerHeadBlock = world.getBlockAt(playerHeadLocation);
             // if the player left the arrow inside of anything but air
+            // not used right now
             if (playerHeadBlock.getType() != Material.AIR) {
                 // begin a search algorithm for the nearest safe block to teleport to
                 // looking for the nearest space with two blocks to stand in

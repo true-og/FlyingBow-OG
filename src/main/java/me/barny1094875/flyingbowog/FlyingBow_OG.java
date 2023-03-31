@@ -2,6 +2,7 @@ package me.barny1094875.flyingbowog;
 
 import me.barny1094875.flyingbowog.Listeners.onArrowPickup;
 import me.barny1094875.flyingbowog.Listeners.onEntityShootBow;
+import me.barny1094875.flyingbowog.Listeners.onVehicleExit;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -50,7 +51,8 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
 
         Bukkit.addRecipe(flyingBowRecipe);
         getServer().getPluginManager().registerEvents(new onEntityShootBow(), this);
-//        getServer().getPluginManager().registerEvents(new onArrowPickup(), this);
+        getServer().getPluginManager().registerEvents(new onVehicleExit(), this);
+        getServer().getPluginManager().registerEvents(new onArrowPickup(), this);
 
         plugin = this;
     }

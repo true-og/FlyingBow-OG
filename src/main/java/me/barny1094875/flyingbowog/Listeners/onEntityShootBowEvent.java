@@ -50,8 +50,8 @@ public class onEntityShootBowEvent implements Listener {
 
                     // add a color to the arrow but not an effect
                     // so that it can be identified later
-                    eventArrow.setColor(Color.fromRGB(0, 255, 255));
                     eventArrow.setBasePotionData(new PotionData(PotionType.UNCRAFTABLE));
+                    eventArrow.setColor(Color.fromRGB(0, 255, 255));
 
                     // tp the player to the location they were at when the arrow was shot 2 ticks after it
                     // was shot to force the server to track the player's position

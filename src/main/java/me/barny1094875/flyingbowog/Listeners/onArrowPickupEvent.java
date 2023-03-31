@@ -5,15 +5,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
-import org.bukkit.util.Vector;
 
-public class onArrowPickup implements Listener {
+public class onArrowPickupEvent implements Listener {
 
 
     // The player picks up their arrow when they hit the ground, so that is being used to
@@ -47,7 +44,18 @@ public class onArrowPickup implements Listener {
             }
 
             // set the player to the center of the block they are on
-            // to prevent them from going through a wall
+            // to prevent them from going through a walls as easily
+            Location newLocation = playerLocation;
+            newLocation.setX(newLocation.getBlockX() + 0.5);
+            newLocation.setY(newLocation.getBlockY() - 1.0);
+            newLocation.setZ(newLocation.getBlockZ() + 0.5);
+
+            player.teleport(newLocation);
+
+
+            // keep the player from picking up their arrows
+            // since they have special modifiers
+            event.getArrow().remove();
 
         }
     }

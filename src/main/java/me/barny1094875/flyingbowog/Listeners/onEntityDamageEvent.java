@@ -17,24 +17,25 @@ public class onEntityDamageEvent implements Listener {
     public void onEntityDamage(EntityDamageByEntityEvent event){
 
         if (event.getDamager() instanceof Arrow){
-//            System.out.println("arrow");
             Arrow arrow = (Arrow) event.getDamager();
             Color arrowColor = arrow.getColor();
 
-            if (arrowColor != null) {
-                // if the arrow has a certain color
-                if (arrowColor.equals(Color.fromRGB(0, 255, 255))) {
-//                    System.out.println("cyan");
-                    // if the arrow has the UNCRAFTABLE potion on it
-                    PotionType arrowPotion = arrow.getBasePotionData().getType();
+            // only disable damage if you are the one that shot the arrow
+            if(arrow.getShooter().equals(event.getEntity())) {
 
-                    if (arrowPotion.equals(PotionType.UNCRAFTABLE)) {
-//                        System.out.println("removing");
+                if (arrowColor != null) {
+                    // if the arrow has a certain color
+                    if (arrowColor.equals(Color.fromRGB(0, 255, 255))) {
+                        // if the arrow has the UNCRAFTABLE potion on it
+                        PotionType arrowPotion = arrow.getBasePotionData().getType();
 
-                        // delete the arrow
-                        arrow.remove();
-                        // make the arrow do no damage
-                        event.setCancelled(true);
+                        if (arrowPotion.equals(PotionType.UNCRAFTABLE)) {
+
+                            // delete the arrow
+                            arrow.remove();
+                            // make the arrow do no damage
+                            event.setCancelled(true);
+                        }
                     }
                 }
             }

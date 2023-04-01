@@ -1,5 +1,6 @@
 package me.barny1094875.flyingbowog;
 
+import me.barny1094875.flyingbowog.Commands.giveCommand;
 import me.barny1094875.flyingbowog.Listeners.onArrowPickupEvent;
 import me.barny1094875.flyingbowog.Listeners.onEntityDamageEvent;
 import me.barny1094875.flyingbowog.Listeners.onEntityShootBowEvent;
@@ -24,6 +25,7 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        plugin = this;
 
         // create the flying bow item
         ItemStack flyingBowItem = new ItemStack(Material.BOW);
@@ -55,7 +57,8 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new onArrowPickupEvent(), this);
         getServer().getPluginManager().registerEvents(new onEntityDamageEvent(), this);
 
-        plugin = this;
+        getCommand("givebow").setExecutor(new giveCommand());
+
     }
 
     public static FlyingBow_OG getPlugin(){

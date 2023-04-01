@@ -28,7 +28,7 @@ public class giveCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 // if the player is in creative mode, allow them to
                 // give bows
-                if (player.getGameMode().equals(GameMode.CREATIVE)) {
+                if (player.hasPermission("flyingbow.canGive")) {
                     // create the flying bow item
                     ItemStack flyingBowItem = new ItemStack(Material.BOW);
                     ItemMeta bowMeta = flyingBowItem.getItemMeta();

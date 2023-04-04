@@ -23,7 +23,15 @@ public class onGenericGameEvent implements Listener {
 
         // if the event was a projectile landing
         if(event.getEvent().equals(GameEvent.PROJECTILE_LAND)){
-            Entity entity = event.getEntity();
+
+            Entity entity = null;
+
+            if(event.getEntity() == null) {
+                entity = event.getEntity();
+            }
+            else{
+                return;
+            }
 
             if(entity.getVehicle() != null) {
                 if (entity.getVehicle() instanceof Arrow) {

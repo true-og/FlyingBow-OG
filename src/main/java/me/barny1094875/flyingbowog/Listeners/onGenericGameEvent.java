@@ -26,7 +26,7 @@ public class onGenericGameEvent implements Listener {
 
             Entity entity = null;
 
-            if(event.getEntity() == null) {
+            if(event.getEntity() != null) {
                 entity = event.getEntity();
             }
             else{

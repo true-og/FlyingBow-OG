@@ -63,7 +63,7 @@ public class onEntityShootBowEvent implements Listener {
                             eventEntity.teleport(eventEntityLocation);
                             eventArrow.addPassenger(eventEntity);
                         }
-                    }, 2L);
+                    }, 1L);
 
                     // if the bow has infinity on it, remove infinity
 

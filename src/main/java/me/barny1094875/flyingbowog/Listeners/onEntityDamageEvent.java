@@ -1,14 +1,11 @@
 package me.barny1094875.flyingbowog.Listeners;
 
 import org.bukkit.Color;
-import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 public class onEntityDamageEvent implements Listener {
@@ -19,9 +16,24 @@ public class onEntityDamageEvent implements Listener {
         if (event.getDamager() instanceof Arrow){
             Arrow arrow = (Arrow) event.getDamager();
             Color arrowColor = arrow.getColor();
+            Player player = null;
+            Player shooter = null;
+
+            if(event.getEntity() instanceof Player){
+                player = (Player) event.getEntity();
+            }
+            else{
+                return;
+            }
+            if(arrow.getShooter() instanceof Player){
+                shooter = (Player) arrow.getShooter();
+            }
+            else{
+                return;
+            }
 
             // only disable damage if you are the one that shot the arrow
-            if(arrow.getShooter().equals(event.getEntity())) {
+            if(shooter.getName().equals(player.getName())) {
 
                 if (arrowColor != null) {
                     // if the arrow has a certain color

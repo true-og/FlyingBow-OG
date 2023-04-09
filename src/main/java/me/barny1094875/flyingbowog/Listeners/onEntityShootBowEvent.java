@@ -33,9 +33,9 @@ public class onEntityShootBowEvent implements Listener {
                 Map<Enchantment, Integer> bowEnchantments = eventBow.getEnchantments();
                 Location eventEntityLocation = eventEntity.getLocation();
                 Arrow eventArrow = (Arrow) event.getProjectile();
-                Entity previousArrow = null;
+                Entity previousVehicle = null;
                 if (eventEntity.getVehicle() != null) {
-                    previousArrow = eventEntity.getVehicle();
+                    previousVehicle = eventEntity.getVehicle();
                 }
 
                 // if the player is holding a flying bow
@@ -43,9 +43,12 @@ public class onEntityShootBowEvent implements Listener {
 
                     // eject the player from the previous arrow, if they were riding
                     // on one before
-                    if (previousArrow != null) {
-                        previousArrow.removePassenger(eventEntity);
-                        previousArrow.remove();
+                    if (previousVehicle != null) {
+                        previousVehicle.removePassenger(eventEntity);
+                        // only delete the entity if it is an arrow
+                        if(previousVehicle instanceof Arrow) {
+                            previousVehicle.remove();
+                        }
                     }
 
                     // add a color to the arrow but not an effect

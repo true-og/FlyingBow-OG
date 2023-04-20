@@ -7,8 +7,10 @@ Current Target: Purpur 1.18.2
 
 Authors: Barny1094875.
 
-To build:
+<h3>To build:</h3>
 
 ./gradlew build
 
-The resulting .jar file will be in build/libs/
+The resulting .jar file will be in build/libs
+
+

@@ -57,7 +57,7 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new onGenericGameEvent(), this);
         getServer().getPluginManager().registerEvents(new onEntityDamageEvent(), this);
 
-        getCommand("givebow").setExecutor(new giveCommand());
+        getCommand("flyingbow").setExecutor(new giveCommand());
 
     }
 

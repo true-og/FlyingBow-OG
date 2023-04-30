@@ -4,8 +4,8 @@ main: me.barny1094875.flyingbowog.FlyingBow_OG
 author: barny1094875
 api-version: 1.18
 commands:
-  givebow:
-    usage: /givebow
+  flyingbow:
+    usage: /flyingbow
 permissions:
   flyingbow.cangive:
     default: op

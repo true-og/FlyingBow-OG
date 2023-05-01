@@ -21,4 +21,4 @@ The bow can be crafted according to the following recipe:
 
 <br>
 <br>
-The bow can also be given using /givebow. This gives a flying bow the the person who ran the command. Requires the cangive permission to run.
+The bow can also be given using /flyingbow give. This gives a flying bow the the person who ran the command. Requires the cangive permission to run.

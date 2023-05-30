@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class commandsTabCompleter implements TabCompleter {
+public class CommandsTabCompleter implements TabCompleter {
 
 
     @Override

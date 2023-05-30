@@ -17,7 +17,7 @@ import org.bukkit.potion.*;
 
 import java.util.Map;
 
-public class onEntityShootBowEvent implements Listener {
+public class OnEntityShootBowEvent implements Listener {
 
     @EventHandler
     public void onEntityShootBow(EntityShootBowEvent event) {

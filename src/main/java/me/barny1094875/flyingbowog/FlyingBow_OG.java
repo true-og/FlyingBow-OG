@@ -1,10 +1,9 @@
 package me.barny1094875.flyingbowog;
 
-import me.barny1094875.flyingbowog.Commands.commandsTabCompleter;
-import me.barny1094875.flyingbowog.Commands.giveCommand;
-import me.barny1094875.flyingbowog.Listeners.onEntityDamageEvent;
-import me.barny1094875.flyingbowog.Listeners.onEntityShootBowEvent;
-import me.barny1094875.flyingbowog.Listeners.onGenericGameEvent;
+import de.tr7zw.nbtinjector.NBTInjector;
+import me.barny1094875.flyingbowog.Commands.CommandsTabCompleter;
+import me.barny1094875.flyingbowog.Commands.GiveCommand;
+import me.barny1094875.flyingbowog.Listeners.*;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -22,6 +21,7 @@ import java.util.Collections;
 public final class FlyingBow_OG extends JavaPlugin implements Listener {
 
     private static FlyingBow_OG plugin;
+
 
     @Override
     public void onEnable() {
@@ -54,12 +54,14 @@ public final class FlyingBow_OG extends JavaPlugin implements Listener {
 
         Bukkit.addRecipe(flyingBowRecipe);
 
-        getServer().getPluginManager().registerEvents(new onEntityShootBowEvent(), this);
-        getServer().getPluginManager().registerEvents(new onGenericGameEvent(), this);
-        getServer().getPluginManager().registerEvents(new onEntityDamageEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnEntityShootBowEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnGenericGameEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnEntityDamageEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnPrepareAnvilEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnAnvilUpdateResultEvent(), this);
 
-        getCommand("flyingbow").setExecutor(new giveCommand());
-        getCommand("flyingbow").setTabCompleter(new commandsTabCompleter());
+        getCommand("flyingbow").setExecutor(new GiveCommand());
+        getCommand("flyingbow").setTabCompleter(new CommandsTabCompleter());
 
     }
 

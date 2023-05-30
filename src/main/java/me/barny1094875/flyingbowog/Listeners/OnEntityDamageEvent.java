@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionType;
 
-public class onEntityDamageEvent implements Listener {
+public class OnEntityDamageEvent implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event){

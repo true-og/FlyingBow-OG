@@ -6,12 +6,10 @@ plugins {
 }
 
 group = "me.Barny1094875"
-version = "1.4"
+version = "2.0"
 
-def apiVersion = "1.18.2" // Declare minecraft server target version.
+def apiVersion = "1.19.4" // Declare minecraft server target version.
 def targetJavaVersion = 17 // Declare java compatibility minimum.
-
-apply plugin: "eclipse" // Enable integration with Eclipse IDE for development.
 
 processResources {
 
@@ -51,7 +49,7 @@ repositories {
 
 dependencies {
 
-    compileOnly "org.purpurmc.purpur:purpur-api:1.18.2-R0.1-SNAPSHOT" // Declare purpur API version to be packaged.
+    compileOnly "org.purpurmc.purpur:purpur-api:1.19.4-R0.1-SNAPSHOT" // Declare purpur API version to be packaged.
     compileOnly("de.tr7zw:item-nbt-api-plugin:2.11.2")
 
 }

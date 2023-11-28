@@ -1,8 +1,8 @@
 name: FlyingBow-OG
-version: '1.4'
+version: '2.0'
 main: me.barny1094875.flyingbowog.FlyingBow_OG
 author: barny1094875
-api-version: 1.18
+api-version: 1.19
 depend: [NBTAPI]
 commands:
   flyingbow:

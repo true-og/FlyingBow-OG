@@ -3,7 +3,7 @@ Adds a flying bow to Minecraft
 
 When the bow is shot, the player rides along with the arrow
 
-Current Target: Purpur 1.18.2
+Current Target: Purpur 1.19.4
 
 Authors: Barny1094875.
 

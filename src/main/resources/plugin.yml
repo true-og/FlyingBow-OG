@@ -1,7 +1,7 @@
 name: FlyingBow-OG
-version: '2.0'
-main: me.barny1094875.flyingbowog.FlyingBow_OG
-author: barny1094875
+version: '2.1'
+main: net.trueog.flyingbowog.FlyingBowOG
+authors: [barny1094875, NotAlexNoyle]
 api-version: 1.19
 depend: [NBTAPI]
 commands:

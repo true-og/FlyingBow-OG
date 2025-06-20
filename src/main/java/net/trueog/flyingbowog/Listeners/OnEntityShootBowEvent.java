@@ -1,7 +1,7 @@
 package net.trueog.flyingbowog.Listeners;
 
 import java.util.Map;
-
+import net.trueog.flyingbowog.FlyingBowOG;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -17,76 +17,79 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import net.trueog.flyingbowog.FlyingBowOG;
-
 public class OnEntityShootBowEvent implements Listener {
 
-	@EventHandler
-	public void onEntityShootBow(EntityShootBowEvent event) {
+    @EventHandler
+    public void onEntityShootBow(EntityShootBowEvent event) {
 
-		// if the entity was a player
-		if (event.getEntity() instanceof Player) {
-			if (event.getProjectile() instanceof Arrow) {
-				Player eventEntity = (Player) event.getEntity();
-				String eventWorld = eventEntity.getWorld().getKey().toString();
-				ItemStack eventBow = ((Player) eventEntity)
-						.getInventory()
-						.getItemInMainHand();
-				Map<Enchantment, Integer> bowEnchantments = eventBow.getEnchantments();
-				Location eventEntityLocation = eventEntity.getLocation();
-				Arrow eventArrow = (Arrow) event.getProjectile();
-				Entity previousVehicle = null;
-				if (eventEntity.getVehicle() != null) {
-					previousVehicle = eventEntity.getVehicle();
-				}
+        // if the entity was a player
+        if (event.getEntity() instanceof Player) {
+            if (event.getProjectile() instanceof Arrow) {
+                Player eventEntity = (Player) event.getEntity();
+                String eventWorld = eventEntity.getWorld().getKey().toString();
+                ItemStack eventBow = ((Player) eventEntity).getInventory().getItemInMainHand();
+                Map<Enchantment, Integer> bowEnchantments = eventBow.getEnchantments();
+                Location eventEntityLocation = eventEntity.getLocation();
+                Arrow eventArrow = (Arrow) event.getProjectile();
+                Entity previousVehicle = null;
+                if (eventEntity.getVehicle() != null) {
+                    previousVehicle = eventEntity.getVehicle();
+                }
 
-				// if the player is holding a flying bow
-				if (eventBow.getItemFlags().contains(ItemFlag.HIDE_DYE)) {
+                // if the player is holding a flying bow
+                if (eventBow.getItemFlags().contains(ItemFlag.HIDE_DYE)) {
 
-					// eject the player from the previous arrow, if they were riding
-					// on one before
-					if (previousVehicle != null) {
-						previousVehicle.removePassenger(eventEntity);
-						// only delete the entity if it is an arrow
-						if(previousVehicle instanceof Arrow) {
-							previousVehicle.remove();
-						}
-					}
+                    // eject the player from the previous arrow, if they were riding
+                    // on one before
+                    if (previousVehicle != null) {
+                        previousVehicle.removePassenger(eventEntity);
+                        // only delete the entity if it is an arrow
+                        if (previousVehicle instanceof Arrow) {
+                            previousVehicle.remove();
+                        }
+                    }
 
-					// add a color to the arrow but not an effect
-					// so that it can be identified later
-					eventArrow.setBasePotionData(new PotionData(PotionType.UNCRAFTABLE));
-					eventArrow.setColor(Color.fromRGB(0, 255, 255));
+                    // add a color to the arrow but not an effect
+                    // so that it can be identified later
+                    eventArrow.setBasePotionData(new PotionData(PotionType.UNCRAFTABLE));
+                    eventArrow.setColor(Color.fromRGB(0, 255, 255));
 
-					// tp the player to the location they were at when the arrow was shot 2 ticks after it
-					// was shot to force the server to track the player's position
-					// then make the player ride the arrow
-					Bukkit.getScheduler().runTaskLater(FlyingBowOG.getPlugin(), () -> {
-						// check if the player and arrow are still in the same world
-						// if not, don't try to make the player ride the arrow
-						if (eventEntity.getWorld().getKey().toString().equals(eventWorld)) {
-							eventEntity.teleport(eventEntityLocation);
-							eventArrow.addPassenger(eventEntity);
-						}
-					}, 1L);
+                    // tp the player to the location they were at when the arrow was shot 2 ticks after it
+                    // was shot to force the server to track the player's position
+                    // then make the player ride the arrow
+                    Bukkit.getScheduler()
+                            .runTaskLater(
+                                    FlyingBowOG.getPlugin(),
+                                    () -> {
+                                        // check if the player and arrow are still in the same world
+                                        // if not, don't try to make the player ride the arrow
+                                        if (eventEntity
+                                                .getWorld()
+                                                .getKey()
+                                                .toString()
+                                                .equals(eventWorld)) {
+                                            eventEntity.teleport(eventEntityLocation);
+                                            eventArrow.addPassenger(eventEntity);
+                                        }
+                                    },
+                                    1L);
 
-					// if the bow has infinity on it, remove infinity
+                    // if the bow has infinity on it, remove infinity
 
-					// infinity is just way too powerful on an item like this
+                    // infinity is just way too powerful on an item like this
 
-					// I'm leaving the item enchantable since we still want mending and unbreaking
-					// to work for the bow, just like for an elytra
+                    // I'm leaving the item enchantable since we still want mending and unbreaking
+                    // to work for the bow, just like for an elytra
 
-					// even though mending can't be put on a bow with infinity, grindstones exist
-					// and an infinity bow can be made to last forever, it just takes some time
-					// at an exp farm to repair it
-					if (bowEnchantments.containsKey(Enchantment.ARROW_INFINITE)) {
-						// remove infinity from the bow
-						eventBow.removeEnchantment(Enchantment.ARROW_INFINITE);
-					}
-				}
-			}
-		}
-	}
-
+                    // even though mending can't be put on a bow with infinity, grindstones exist
+                    // and an infinity bow can be made to last forever, it just takes some time
+                    // at an exp farm to repair it
+                    if (bowEnchantments.containsKey(Enchantment.ARROW_INFINITE)) {
+                        // remove infinity from the bow
+                        eventBow.removeEnchantment(Enchantment.ARROW_INFINITE);
+                    }
+                }
+            }
+        }
+    }
 }

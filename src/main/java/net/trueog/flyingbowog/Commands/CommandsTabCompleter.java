@@ -1,3 +1,5 @@
+// This is free and unencumbered software released into the public domain.
+// Authors: Barny1094875, NotAlexNoyle.
 package net.trueog.flyingbowog.Commands;
 
 import java.util.ArrayList;

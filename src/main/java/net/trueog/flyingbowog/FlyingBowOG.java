@@ -1,3 +1,5 @@
+// This is free and unencumbered software released into the public domain.
+// Authors: Barny1094875, NotAlexNoyle.
 package net.trueog.flyingbowog;
 
 import java.util.Collections;
@@ -27,6 +29,7 @@ public final class FlyingBowOG extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+
         // Plugin startup logic
         plugin = this;
 
@@ -63,6 +66,12 @@ public final class FlyingBowOG extends JavaPlugin implements Listener {
     }
 
     public static FlyingBowOG getPlugin() {
+
         return plugin;
+    }
+
+    public static String getPrefix() {
+
+        return "&7[&5FlyingBow&f-&4OG&7] ";
     }
 }

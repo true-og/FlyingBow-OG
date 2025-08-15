@@ -31,25 +31,32 @@ public class OnEntityShootBowEvent implements Listener {
     public void onEntityShootBow(EntityShootBowEvent event) {
 
         // Only react to players shooting arrows with our Flying Bow.
-        if (!(event.getEntity() instanceof Player player)) return;
-        if (!(event.getProjectile() instanceof Arrow arrow)) return;
+        if (!(event.getEntity() instanceof Player player))
+            return;
+        if (!(event.getProjectile() instanceof Arrow arrow))
+            return;
         ItemStack bow = player.getInventory().getItemInMainHand();
-        if (!isFlyingBow(bow)) return;
+        if (!isFlyingBow(bow))
+            return;
 
         // Block flying bow usage while player is already wearing an elytra.
         ItemStack chest = player.getInventory().getChestplate();
         if (chest != null && chest.getType() == Material.ELYTRA) {
-            UtilitiesOG.trueogMessage(
-                    player,
+
+            UtilitiesOG.trueogMessage(player,
                     FlyingBowOG.getPrefix() + "&cERROR: &6You cannot use the Flying Bow while wearing an elytra!");
             return;
+
         }
 
         // Clean up any previous rideable arrow.
         Entity vehicle = player.getVehicle();
         if (vehicle != null) {
+
             vehicle.removePassenger(player);
-            if (vehicle instanceof Arrow) vehicle.remove();
+            if (vehicle instanceof Arrow)
+                vehicle.remove();
+
         }
 
         // Tag the new arrow so we can recognize it later.
@@ -62,97 +69,107 @@ public class OnEntityShootBowEvent implements Listener {
         Location origin = shooter.getLocation();
         Arrow rideArrow = arrow;
 
-        Bukkit.getScheduler()
-                .runTaskLater(
-                        FlyingBowOG.getPlugin(),
-                        () -> {
-                            if (shooter.getWorld().getKey().toString().equals(worldKey)) {
-                                shooter.teleport(origin);
-                                rideArrow.addPassenger(shooter);
-                            }
-                        },
-                        1L);
+        Bukkit.getScheduler().runTaskLater(FlyingBowOG.getPlugin(), () -> {
+
+            if (shooter.getWorld().getKey().toString().equals(worldKey)) {
+
+                shooter.teleport(origin);
+                rideArrow.addPassenger(shooter);
+
+            }
+
+        }, 1L);
 
         // Strip Infinity from the bow (too OP for this item).
         if (bow.containsEnchantment(Enchantment.ARROW_INFINITE)) {
+
             bow.removeEnchantment(Enchantment.ARROW_INFINITE);
+
         }
+
     }
 
     // Block elytra and flying bow combination event (1.20)
-    /*@EventHandler(ignoreCancelled = true)
-    public void onArmorEquip(PlayerArmorChangeEvent event) {
-
-    	if (event.getSlot() != EquipmentSlot.CHEST) return;
-
-    	ItemStack newItem = event.getNewItem();
-    	if (newItem == null || newItem.getType() != Material.ELYTRA) return;
-
-    	Player player = event.getPlayer();
-
-    	boolean holdingFlyingBow = isFlyingBow(player.getInventory().getItemInMainHand());
-
-    	boolean ridingFlyingBowArrow = false;
-    	if (player.isInsideVehicle() && player.getVehicle() instanceof Arrow ride) {
-    		if (ride.getBasePotionData().getType() == PotionType.UNCRAFTABLE
-    				&& ride.getColor().asRGB() == 0x00FFFF) {
-    			ridingFlyingBowArrow = true;
-    		}
-    	}
-
-    	if (holdingFlyingBow || ridingFlyingBowArrow) {
-    		event.setCancelled(true);
-    		UtilitiesOG.trueogMessage(player,
-    			FlyingBowOG.getPrefix()
-    			+ "&cERROR: &6You cannot equip an elytra while using the Flying Bow!");
-    	}
-
-    }*/
+    /*
+     * @EventHandler(ignoreCancelled = true) public void
+     * onArmorEquip(PlayerArmorChangeEvent event) {
+     * 
+     * if (event.getSlot() != EquipmentSlot.CHEST) return;
+     * 
+     * ItemStack newItem = event.getNewItem(); if (newItem == null ||
+     * newItem.getType() != Material.ELYTRA) return;
+     * 
+     * Player player = event.getPlayer();
+     * 
+     * boolean holdingFlyingBow =
+     * isFlyingBow(player.getInventory().getItemInMainHand());
+     * 
+     * boolean ridingFlyingBowArrow = false; if (player.isInsideVehicle() &&
+     * player.getVehicle() instanceof Arrow ride) { if
+     * (ride.getBasePotionData().getType() == PotionType.UNCRAFTABLE &&
+     * ride.getColor().asRGB() == 0x00FFFF) { ridingFlyingBowArrow = true; } }
+     * 
+     * if (holdingFlyingBow || ridingFlyingBowArrow) { event.setCancelled(true);
+     * UtilitiesOG.trueogMessage(player, FlyingBowOG.getPrefix() +
+     * "&cERROR: &6You cannot equip an elytra while using the Flying Bow!"); }
+     * 
+     * }
+     */
 
     // Block elytra and flying bow combination event (1.19)
     @EventHandler(ignoreCancelled = true)
     public void onArmorEquip(PlayerArmorChangeEvent event) {
 
         // Only react to chest-slot changes.
-        if (event.getSlotType() != PlayerArmorChangeEvent.SlotType.CHEST) return;
+        if (event.getSlotType() != PlayerArmorChangeEvent.SlotType.CHEST)
+            return;
 
         ItemStack newItem = event.getNewItem();
-        if (newItem == null || newItem.getType() != Material.ELYTRA) return;
+        if (newItem == null || newItem.getType() != Material.ELYTRA)
+            return;
 
         Player player = event.getPlayer();
 
         boolean holdingFlyingBow = isFlyingBow(player.getInventory().getItemInMainHand());
         boolean ridingFlyingBowArrow = isRidingTaggedArrow(player);
 
-        if (!(holdingFlyingBow || ridingFlyingBowArrow)) return;
+        if (!(holdingFlyingBow || ridingFlyingBowArrow))
+            return;
 
         /* event is NOT cancellable in <1.20 Purpur builds, so revert the change */
         ItemStack previous = event.getOldItem();
         ItemStack elytra = newItem.clone();
 
         Bukkit.getScheduler().runTask(FlyingBowOG.getPlugin(), () -> {
+
             player.getInventory().setChestplate(previous);
             Map<Integer, ItemStack> leftovers = player.getInventory().addItem(elytra);
             leftovers.values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
+
         });
 
-        UtilitiesOG.trueogMessage(
-                player, FlyingBowOG.getPrefix() + "&cERROR: &6You cannot equip an elytra while using the Flying Bow!");
+        UtilitiesOG.trueogMessage(player,
+                FlyingBowOG.getPrefix() + "&cERROR: &6You cannot equip an elytra while using the Flying Bow!");
+
     }
 
     // Identifies your custom “Flying Bow”.
     private boolean isFlyingBow(ItemStack item) {
-        return item != null
-                && item.getType() == Material.BOW
-                && item.getItemFlags().contains(ItemFlag.HIDE_DYE);
+
+        return item != null && item.getType() == Material.BOW && item.getItemFlags().contains(ItemFlag.HIDE_DYE);
+
     }
 
     // True if the player is riding one of the cyan, UNCRAFTABLE arrows.
     private boolean isRidingTaggedArrow(Player player) {
-        if (!player.isInsideVehicle()) return false;
-        if (!(player.getVehicle() instanceof Arrow arrow)) return false;
 
-        return arrow.getBasePotionData().getType() == PotionType.UNCRAFTABLE
-                && arrow.getColor().asRGB() == 0x00FFFF;
+        if (!player.isInsideVehicle())
+            return false;
+        if (!(player.getVehicle() instanceof Arrow arrow))
+            return false;
+
+        return arrow.getBasePotionData().getType() == PotionType.UNCRAFTABLE && arrow.getColor().asRGB() == 0x00FFFF;
+
     }
+
 }

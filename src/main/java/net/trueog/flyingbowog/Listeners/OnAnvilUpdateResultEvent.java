@@ -17,13 +17,21 @@ public class OnAnvilUpdateResultEvent implements Listener {
         // Cast each HumanEntity to a player so that we can update their inventories.
         ArrayList<Player> players = new ArrayList<>();
         for (HumanEntity human : event.getViewers()) {
+
             if (human instanceof Player) {
+
                 players.add((Player) human);
+
             }
+
         }
 
         for (Player player : players) {
+
             player.updateInventory();
+
         }
+
     }
+
 }

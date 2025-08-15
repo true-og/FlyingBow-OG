@@ -19,13 +19,19 @@ public class OnGenericGameEvent implements Listener {
             Entity entity = null;
 
             if (event.getEntity() != null) {
+
                 entity = event.getEntity();
+
             } else {
+
                 return;
+
             }
 
             if (entity.getVehicle() != null) {
+
                 if (entity.getVehicle() instanceof Arrow) {
+
                     Arrow arrow = (Arrow) entity.getVehicle();
 
                     // tp the entity to the center of the block they
@@ -39,8 +45,13 @@ public class OnGenericGameEvent implements Listener {
 
                     // delete the arrow
                     arrow.remove();
+
                 }
+
             }
+
         }
+
     }
+
 }

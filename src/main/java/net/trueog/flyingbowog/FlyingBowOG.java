@@ -63,15 +63,19 @@ public final class FlyingBowOG extends JavaPlugin implements Listener {
 
         getCommand("flyingbow").setExecutor(new GiveCommand());
         getCommand("flyingbow").setTabCompleter(new CommandsTabCompleter());
+
     }
 
     public static FlyingBowOG getPlugin() {
 
         return plugin;
+
     }
 
     public static String getPrefix() {
 
         return "&7[&5FlyingBow&f-&4OG&7] ";
+
     }
+
 }

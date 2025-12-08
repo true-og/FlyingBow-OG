@@ -66,17 +66,16 @@ public class OnEntityShootBowEvent implements Listener {
         // Hop on the arrow one tick later (server position sync trick).
         Player shooter = player;
         String worldKey = shooter.getWorld().getKey().toString();
-        Location origin = shooter.getLocation();
         Arrow rideArrow = arrow;
 
         Bukkit.getScheduler().runTaskLater(FlyingBowOG.getPlugin(), () -> {
 
-            if (shooter.getWorld().getKey().toString().equals(worldKey)) {
+            boolean sameWorld = shooter.getWorld().getKey().toString().equals(worldKey);
 
-                shooter.teleport(origin);
-                rideArrow.addPassenger(shooter);
+            if (!sameWorld || rideArrow.isDead() || !rideArrow.isValid())
+                return;
 
-            }
+            rideArrow.addPassenger(shooter);
 
         }, 1L);
 

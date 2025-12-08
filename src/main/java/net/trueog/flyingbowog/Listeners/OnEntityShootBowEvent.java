@@ -68,7 +68,7 @@ public class OnEntityShootBowEvent implements Listener {
         String worldKey = shooter.getWorld().getKey().toString();
         Arrow rideArrow = arrow;
 
-        Bukkit.getScheduler().runTaskLater(FlyingBowOG.getPlugin(), () -> {
+        Bukkit.getScheduler().runTask(FlyingBowOG.getPlugin(), () -> {
 
             boolean sameWorld = shooter.getWorld().getKey().toString().equals(worldKey);
 
@@ -77,7 +77,7 @@ public class OnEntityShootBowEvent implements Listener {
 
             rideArrow.addPassenger(shooter);
 
-        }, 1L);
+        });
 
         // Strip Infinity from the bow (too OP for this item).
         if (bow.containsEnchantment(Enchantment.ARROW_INFINITE)) {

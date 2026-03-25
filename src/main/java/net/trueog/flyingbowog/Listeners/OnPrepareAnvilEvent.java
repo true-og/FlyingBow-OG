@@ -67,7 +67,12 @@ public class OnPrepareAnvilEvent implements Listener {
 
                         flyingBowItem.setItemMeta(flyingBowItemMeta);
 
-                        int previousRepairCost = NBT.get(anvil.getFirstItem(), nbt -> nbt.getInteger("RepairCost"));
+                        Integer previousRepairCostTag = NBT.get(anvil.getFirstItem(), nbt -> {
+
+                            return nbt.getInteger("RepairCost");
+
+                        });
+                        int previousRepairCost = previousRepairCostTag != null ? previousRepairCostTag : 0;
                         int newRepairCost = previousRepairCost + 1;
 
                         NBT.modify(flyingBowItem, nbt -> {

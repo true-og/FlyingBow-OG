@@ -3,7 +3,7 @@ version: '2.1'
 main: net.trueog.flyingbowog.FlyingBowOG
 authors: [barny1094875, NotAlexNoyle]
 api-version: 1.19
-depend: [NBTAPI]
+depend: [Item-NBT-API]
 commands:
   flyingbow:
     usage: /flyingbow

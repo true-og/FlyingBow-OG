@@ -3,6 +3,7 @@
 package net.trueog.flyingbowog.Listeners;
 
 import de.tr7zw.nbtapi.NBT;
+import java.util.regex.Pattern;
 import net.kyori.adventure.text.Component;
 import net.trueog.flyingbowog.FlyingBowOG;
 import org.bukkit.Material;
@@ -15,6 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 
 public class OnPrepareAnvilEvent implements Listener {
+
+    private static final Pattern LEGACY_SECTION_COLOR_PATTERN = Pattern.compile("(?i)§[0-9A-FK-OR]");
 
     @EventHandler
     public void onPrepareAnvilEvent(PrepareAnvilEvent event) {
@@ -44,10 +47,21 @@ public class OnPrepareAnvilEvent implements Listener {
                         flyingBowItemMeta.setDamage(Math.max(0,
                                 flyingBowItemMeta.getDamage() - (bowHeal * anvil.getSecondItem().getAmount())));
 
-                        // set the bow name IF the player is trying to rename it
-                        if (!anvil.getRenameText().equals("Flying Bow")) {
+                        // Purpur exposes the rename field as a raw String. In some cases this can
+                        // include legacy section color codes from the source item name, which can
+                        // leak into the final result as a leading "f" from "§f". Only apply an
+                        // explicit rename when the player actually entered non-blank text.
+                        String renameText = anvil.getRenameText();
+                        if (renameText != null) {
 
-                            flyingBowItemMeta.displayName(Component.text(anvil.getRenameText()));
+                            String sanitizedRenameText = LEGACY_SECTION_COLOR_PATTERN.matcher(renameText).replaceAll("")
+                                    .trim();
+
+                            if (!sanitizedRenameText.isEmpty() && !sanitizedRenameText.equals("Flying Bow")) {
+
+                                flyingBowItemMeta.displayName(Component.text(sanitizedRenameText));
+
+                            }
 
                         }
 
